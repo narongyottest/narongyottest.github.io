@@ -1,0 +1,123 @@
+/* รีเซ็ต margin, padding และกำหนด box-sizing เป็น border-box กับทุก element */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* กำหนดตัวแปรสีหลักที่จะใช้ในโค้ด */
+:root {
+  --clr: rgb(246, 39, 180); /* สีชมพู */
+}
+
+/* กำหนดรูปแบบการจัดวางและสีพื้นหลังของ body */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #000; /* สีพื้นหลังสีดำ */
+}
+
+/* กำหนดสไตล์ให้กับ container */
+.container {
+  position: relative;
+  top: 100px;
+  height: 400px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* สไตล์ของ element ที่มี class เป็น cloud */
+.container .cloud {
+  position: relative;
+  width: 300px;
+  z-index: 100; /* ทำให้ cloud อยู่ด้านหน้าสุด */
+  filter: drop-shadow(0 0 35px var(--clr)); /* เพิ่มแสงเงาที่มีสีตามตัวแปร */
+}
+
+/* สไตล์ของหัวข้อใน cloud */
+.container .cloud h2 {
+  position: absolute;
+  color: var(--clr); /* สีตามตัวแปร */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap; /* ป้องกันข้อความขึ้นบรรทัดใหม่ */
+  color: white;
+  font-size: 2em;
+  z-index: 1000; /* วางอยู่ด้านหน้าสุด */
+  font-weight: 400;
+  padding: 0 10px;
+  border-radius: 10px;
+  text-transform: uppercase; /* ตัวอักษรพิมพ์ใหญ่ */
+  background: var(--clr); /* สีพื้นหลังตามตัวแปร */
+}
+
+/* ส่วนตกแต่งก่อนข้อความใน h2 */
+.container .cloud h2::before {
+  content: "";
+  position: absolute;
+  top: -115px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 100px;
+  width: 120%;
+  height: 100px;
+  background: var(--clr); /* สีตามตัวแปร */
+}
+
+/* ส่วนตกแต่งหลังข้อความใน h2 (สร้างรูปร่างก้อนเมฆ) */
+.container .cloud h2::after {
+  content: "";
+  position: absolute;
+  top: -150px;
+  left: 25px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--clr); /* สีตามตัวแปร */
+  box-shadow: 120px -30px 0 40px var(--clr); /* เพิ่มเงาสำหรับรูปร่างเมฆ */
+}
+
+/* สไตล์ของ drop (หยดน้ำ) */
+.container .cloud .drop {
+  position: absolute;
+  top: 60px;
+  height: 20px;
+  line-height: 20px;
+  color: rgb(223, 111, 216); /* สีตามตัวแปร */
+  transform-origin: bottom;
+  animation: animate 2s linear infinite; /* เพิ่มแอนิเมชัน animate */
+}
+
+/* กำหนดแอนิเมชันสำหรับหยดน้ำตก (rain drop animation) */
+@keyframes animate {
+  0% {
+    transform: translateY(0) scaleY(0); /* กำหนดการแปลงเริ่มต้นให้หยดน้ำอยู่ที่ตำแหน่ง Y เป็น 0 และขนาดในแนวตั้งเป็น 0 */
+    transform-origin: top; /* ระบุให้จุดกำเนิดของการแปลงอยู่ที่ด้านบนของหยดน้ำ */
+  }
+  10% {
+    transform: translateY(0) scaleY(0.25); /* ขยายขนาดของหยดน้ำในแนวตั้งเล็กน้อย (25%) โดยไม่เลื่อนตำแหน่ง Y */
+    transform-origin: top; /* คงจุดกำเนิดของการแปลงไว้ที่ด้านบน */
+  }
+  20% {
+    transform: translateY(0) scaleY(1); /* ขยายขนาดของหยดน้ำในแนวตั้งเต็มที่ (100%) โดยตำแหน่ง Y ยังคงเดิม */
+  }
+  70% {
+    transform: translateY(300px) scaleY(1); /* เลื่อนหยดน้ำลงไปที่ตำแหน่ง Y เท่ากับ 300px โดยขนาดในแนวตั้งคงเดิม */
+    transform-origin: bottom; /* เปลี่ยนจุดกำเนิดของการแปลงไปที่ด้านล่างของหยดน้ำ */
+  }
+  80% {
+    transform: translateY(300px) scaleY(1); /* คงตำแหน่ง Y ที่ 300px และขนาดในแนวตั้งที่ 100% */
+    transform-origin: bottom; /* จุดกำเนิดของการแปลงยังคงอยู่ที่ด้านล่าง */
+  }
+  100% {
+    transform: translateY(300px) scaleY(0); /* ลดขนาดในแนวตั้งของหยดน้ำเป็น 0 ที่ตำแหน่ง Y เท่ากับ 300px */
+    transform-origin: bottom; /* จุดกำเนิดของการแปลงยังคงอยู่ที่ด้านล่าง */
+    text-shadow: -180px 0 0 var(--clr), 180px 0 0 var(--clr); /* กำหนดเงาข้อความทางซ้ายและขวาเพื่อเพิ่มเอฟเฟกต์แสง */
+  }
+}
+
+
